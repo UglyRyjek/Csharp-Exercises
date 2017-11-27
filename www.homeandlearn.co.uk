@@ -1,0 +1,502 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HomeAndLearn
+// Exercises from:  http://www.homeandlearn.co.uk/exercises/programming_exercises.html
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            //Exercise2();
+            //Exercise3();
+            //Exercise4();
+            //Exercise6();
+            //Exercise7and8();
+            //Exercise9("Marysia");
+            //Exercise10();
+        }
+
+        //EXERCISE 1 - too easy
+
+        #region Exercise 2
+        //EXERCISE 2
+        //    Set up an array to hold the following string values:
+        //Beyonce (f)
+        //David Bowie (m)
+        //Elvis Costello (m)
+        //Madonna (f)
+        //Elton John (m)
+        //Charles Aznavour (m)
+        //Write a program to loop round and count how many are male vocalists and how many are female. Display your answer in a textbox, listbox or console.
+
+        //time: 6 min
+        private static void Exercise2()
+        {
+
+            string[] strArr = { "Beyonce (f)",
+                                "David Bowie (m)",
+                                "Elvis Costello (m)",
+                                "Madonna (f)",
+                                "Elton John (m)",
+                                "Charles Aznavour (m)" };
+
+
+
+            int womanCount = 0;
+            int manCount = 0;
+
+
+            foreach (string item in strArr)
+            {
+                int indx = item.IndexOf(@"(");
+                if (item[indx + 1] == 'f')
+                {
+                    womanCount++;
+                }
+                else if (item[indx + 1] == 'm')
+                {
+                    manCount++;
+                }
+                else
+                {
+                    // in case of error
+                }
+            }
+
+            Console.WriteLine("There are {0} men and {1} woman in this array", manCount, womanCount);
+
+        }
+        # endregion 
+
+        #region Exercise 3
+        //EXERCISE 3
+        //Set up an array of the following musical instruments:
+        //cello
+        //guitar
+        //violin
+        //double bass
+        //Loop round and remove the vowels.Display the new words in a textbox, listbox or console.
+        //Useful reference links: Again, loops and arrays.But also the Replace string method. Hint for this exercise: you can have one loop inside another.
+        //time : 12 min
+        private static void Exercise3()
+        {
+
+            string[] strArr = { "cello",
+                                "guitar",
+                                "violin",
+                                "dobule bass"
+                                                };
+
+            string[] newArr = new string[strArr.Length];
+
+            for (int i = 0; i < strArr.Length; i++)
+            {
+                string tempString = "";
+                for (int j = 0; j < strArr[i].Length; j++)
+                {
+                    if (strArr[i][j] != 'e' && strArr[i][j] != 'a' && strArr[i][j] != 'i' && strArr[i][j] != 'u' && strArr[i][j] != 'o')
+                    {
+                        tempString += strArr[i][j];
+                    }
+                }
+                newArr[i] = tempString;
+
+            }
+            Console.WriteLine("Array before modification:");
+            foreach (var item in strArr)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
+            Console.WriteLine("and after:");
+            foreach (var item in newArr)
+            {
+                Console.WriteLine(item);
+            }
+
+
+
+        }
+        # endregion 
+
+        #region Exercise 6
+        //EXERCISE 4
+        //Write a program to count how many numbers between 1 and 1000 are divisible by 3 with no remainder.Display the answer
+        // time 3 min
+        private static void Exercise4()
+        {
+            int sum = 0;
+            for (int i = 1; i < 1001; i++)
+            {
+                if (i % 3 == 0)
+                    sum++;
+            }
+
+            Console.WriteLine(sum);
+        }
+        #endregion
+
+        //EXERCISE 5 - too easy
+
+        #region Exercise 6
+        //EXERCISE 6
+        //Write code to create a checkerboard pattern with the words "black" and "white" standing in for colours.
+        //Display the new words in a textbox, listbox or console.When you have finshed this exercise, it should look something like this:
+
+        //time 14 min
+        private static void Exercise6()
+        {
+
+            DrawRow(true);
+            DrawRow(false);
+            DrawRow(true);
+            DrawRow(false);
+            DrawRow(true);
+            DrawRow(false);
+            DrawRow(true);
+            DrawRow(false);
+
+
+
+            void DrawRow(bool isItBlack)
+            {
+                bool testBool = isItBlack;
+                string resultingLine = "";
+                for (int i = 1; i < 9; i++)
+                {
+                    if (testBool)
+                    {
+                        resultingLine += "XXXXX" + "|";
+                        testBool = !testBool;
+                    }
+                    else
+                    {
+                        resultingLine += "OOOOO" + "|";
+                        testBool = !testBool;
+
+                    }
+                }
+                Console.WriteLine((resultingLine.Substring(0, resultingLine.Length - 1)));
+            }
+        }
+        #endregion
+
+        #region Exercise 7 and Exerise 8
+
+        //      Exercise 7
+        //        Write a program to work out if a series of 5 digits are consecutive numbers.To make this easier, assumes the digits are a string:
+        //string numbers = "10-9-8-7-6";
+        //        Make sure your code works for the following sequence, as well:
+        //string numbers = "1-2-3-4-5";
+
+        // time: 28 min
+
+        //      Exercise 8
+        //Following on from the exercise above, work out if a series of 5 integers 
+        //    contain the same number.So the sequence 10-9-8-7-7 would yield the 
+        //    answer "Pair of numbers found".
+
+        // time: 5 min
+        private static void Exercise7and8()
+        {
+            string numbers = "10-9-8-7-7";
+            string numbers2 = "1-2-3-4-5";
+
+            //let make a methond to change string into INT list regardles the kind of used separator 
+            List<int> GiveListBack(string inputString)
+            {
+                List<int> lista = new List<int>();
+                for (int i = 0; i < inputString.Length; i += 0)
+                {
+                    if (Char.IsDigit(inputString[i]))
+                    {
+                        string newNumber = "" + inputString[i];
+                        int nextIndex = 1;
+                        if (nextIndex + i < inputString.Length)
+                        {
+                            while (Char.IsDigit(inputString[i + nextIndex]))
+                            {
+                                newNumber += inputString[i + nextIndex];
+                                nextIndex++;
+                            }
+                        }
+                        lista.Add(int.Parse(newNumber));
+                        i += nextIndex;
+                    }
+                    else
+                    {
+                        i += 1;
+
+                    }
+                }
+                return lista;
+            }
+
+            // let use this method to create two list based on passed strings
+            List<int> listaNumbers = GiveListBack(numbers);
+            List<int> listaNumbers2 = GiveListBack(numbers2);
+
+            // now here is a bit if-heavy method to check if the list is consecutive ascending or descending 
+            bool isItConsecutive(List<int> lista)
+            {
+                bool isConsecutive = true;
+                int _1asc_2desc_0initial = 0;
+                for (int i = 0; i < lista.Count - 1; i++)
+                {
+                    if (_1asc_2desc_0initial == 0)
+                    {
+                        if (lista[i] == lista[i + 1] + 1)
+                        {
+                            _1asc_2desc_0initial = 1;
+                        }
+                        else if (lista[i] == lista[i + 1] - 1)
+                        {
+                            _1asc_2desc_0initial = 2;
+                        }
+                        else // break 
+                        {
+                            i = lista.Count + 1;
+                            isConsecutive = false;
+                        }
+                    }
+                    else if (_1asc_2desc_0initial == 1 && lista[i] == lista[i + 1] + 1)
+                    {
+                        //just keep iterating
+                    }
+                    else if (_1asc_2desc_0initial == 2 && lista[i] == lista[i + 1] - 1)
+                    {
+                        //just keep iterating
+                    }
+                    else
+                    {
+                        i = lista.Count + 1;
+                        isConsecutive = false;
+                    }
+
+                }
+
+                return isConsecutive;
+            }
+
+            // and the additional method for exercise 8 
+            bool pairFounder(List<int> lista)
+            {
+                for (int i = 0; i < lista.Count - 1; i++)
+                {
+                    if (lista[i] == lista[i + 1])
+                        return true;
+                }
+                return false;
+            }
+
+            // and the results
+            Console.WriteLine("It is " + isItConsecutive(listaNumbers) + " that these numbers: " + numbers + " are consecutive");
+            Console.WriteLine("It is " + isItConsecutive(listaNumbers2) + " that these numbers: " + numbers2 + " are consecutive");
+
+            Console.WriteLine("This string contains a consecutive pair :  " + pairFounder(listaNumbers));
+        }
+        #endregion
+
+        #region Exercise 9
+        //Print the word diagonally, diagonally from left to right, 
+        //top to bottom.When you display your answer it should look something like this:
+        // time: 7 min
+        private static void Exercise9(string toPrint)
+        {
+            for (int i = 0; i < toPrint.Length; i++)
+            {
+                string temp = "";
+                for (int k = 0; k < i; k++)
+                {
+                    temp += " ";
+                }
+                temp += toPrint[i];
+                Console.WriteLine(temp);
+            }
+        }
+
+        #endregion
+
+
+        #region Exercise 10
+
+        //  EXERCISE 10
+        //Set up a string variable to hold the following results:
+        //string results = "Manchester United 1 Chelsea 0, Arsenal 1 Manchester United 1, Manchester United 3 Fulham 1, 
+        // Liverpool 2 Manchester United 1, Swansea 2 Manchester United 4";
+
+        //Write a programme to work out how many wins Manchester United had, how many games they drew, and how many Manchester United lost.
+        //Extend the programme to work out how many goals Manchester United scored and how many they conceded.
+        //Suppose a win gains you 3 points, a draw 1 point, and a loss no points.Have your programme work out how many points in total Manchester United have acquired.
+        //When you have finished this exercise, the output in your textbox, listbox or console should be as follows:
+
+        private static void Exercise10()
+        {
+            string results = "Manchester United 1 Chelsea 4, Arsenal 2 Manchester United 4, Manchester United 3 Fulham 1, Liverpool 2 Manchester United 1, Swansea 2 Manchester United 4";
+
+            string[] scoreArray = results.Split(',');
+
+            // the list of classes - the class iteslf is declared bellow
+            List<Match> matchesList = new List<Match>();
+
+            // populate the list passing to class construtor the strings from previous array
+            foreach (var item in scoreArray)
+            {
+                matchesList.Add(new Match(item, "Manchester United"));
+            }
+
+            // pring the result
+            PrintTeamStatistics(matchesList);
+
+
+
+            void PrintTeamStatistics(List<Match> _matchesList)
+            {
+                int win = 0;
+                int draw = 0;
+                int lost = 0;
+                int goalsScored = 0;
+                int goalsConceded = 0;
+                int pointsSum = 0;
+                foreach (var item in _matchesList)
+                {
+                    switch (item.result)
+                    {
+                        case "Win":
+                            win++;
+                            break;
+                        case "Lost":
+                            lost++;
+                            break;
+                        case "Draw":
+                            draw++;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    goalsConceded += item.rivalGoals;
+                    goalsScored += item.teamGoals;
+                    pointsSum += item.pointsObtained;
+                }
+
+                Console.WriteLine("Manchester United:");
+                Console.WriteLine("Wins " + win);
+                Console.WriteLine("Draws " + draw);
+                Console.WriteLine("Lost " + lost);
+                Console.WriteLine("Goal scored " + goalsScored);
+                Console.WriteLine("Goal conceded " + goalsConceded);
+                Console.WriteLine("Total points " + pointsSum);
+
+            }
+        }
+        # endregion
+
+
+
+
+    }
+
+    // a class which should represent one single match, teams and result
+    public class Match
+    {
+        public string team;
+        public string rival;
+        public int teamGoals;
+        public int rivalGoals;
+
+        public string result;
+        public int pointsObtained;
+
+        // probably too big constuctor which transform raw string into complex data about each single match
+        public Match(string stringPart, string thisTeamName)
+        {
+            int firstIndex = 0;
+            int secondIndex = 0;
+            string name1 = "";
+            string name2 = "";
+            int score1 = 0;
+            int score2 = 0;
+
+            for (int i = 0; i < stringPart.Length; i++)
+            {
+                if (Char.IsDigit(stringPart[i]))
+                {
+                    if (firstIndex == 0)
+                    { 
+                        firstIndex = i;
+                        name1 = stringPart.Substring(0, i).ToString().Trim();
+                        score1 = Int32.Parse(stringPart[i].ToString());
+                    }
+                    else
+                    {
+                        secondIndex = i;
+                        name2 = stringPart.Substring(firstIndex + 1, stringPart.Length - firstIndex - 2).ToString().Trim();
+                        score2 = Int32.Parse(stringPart[i].ToString());
+
+                    } 
+                }
+            }
+
+            if (name2 == thisTeamName)
+            {
+                team = name2;
+                rival = name1;
+                teamGoals = score2;
+                rivalGoals = score1;
+            } else
+            {
+                team = name1;
+                rival = name2;
+                teamGoals = score1;
+                rivalGoals = score2;
+
+            }
+
+            if (teamGoals > rivalGoals)
+            {
+                result = "Win";
+                pointsObtained = 3;
+            }
+            else if (teamGoals == rivalGoals)
+            {
+                result = "Draw";
+                pointsObtained = 1;
+            }
+            else
+            {
+                result = "Lost";
+                pointsObtained = 0;
+            }
+
+        }
+
+        public void PrintAll()
+        {
+            Console.WriteLine(team);
+            Console.WriteLine(teamGoals);
+            Console.WriteLine(rival);
+            Console.WriteLine(rivalGoals);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
